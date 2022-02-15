@@ -15,10 +15,12 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "adguard-home-bg <blocklist-url>",
 	Short: "AdGuard Home Blocklist Generator",
-	Long: `AdGuard Home Blocklist Generator - AdGuard Home blocklist generattion from a URL.
+	Long: `AdGuard Home Blocklist Generator.
 
-A CLI and web utility to transform an public blocklist into a formatted
-AdGuard Home blocklist, including additional modifier tags.`,
+A CLI and web utility to convert a public blocklist into a formatted
+AdGuard Home blocklist, including adding additional rule modifiers.
+
+Project & documentation: https://github.com/axllent/adguard-home-bg`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
