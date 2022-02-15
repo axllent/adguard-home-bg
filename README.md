@@ -16,7 +16,7 @@ It comes with a simple command line interface and a web interface. The web inter
 
 ### Web interface
 
-To start the web interface, simply run `adguard-home-bg server [-l <listen interface:port>]`. By default it listens on `0.0.0.0:8080`.
+To start the web interface, simply run `adguard-home-bg server [-l <listen interface:port>]`. By default it listens on `0.0.0.0:8080`. There is also a [docker image](https://hub.docker.com/r/axllent/adguard-home-bg) available.
 
 ![AdGuard Home blocklist generator](screenshot.png "a title")
 
