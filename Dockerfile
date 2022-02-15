@@ -12,10 +12,13 @@ RUN cd /app \
 # BUILD IMAGE
 FROM alpine
 
+
 EXPOSE 8080
 
 RUN apk add --no-cache tzdata
 
 COPY --from=builder /app/adguard-home-bg /usr/bin/adguard-home-bg
+
+USER nobody
 
 CMD ["adguard-home-bg", "server"]
