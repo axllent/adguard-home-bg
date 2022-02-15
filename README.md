@@ -1,11 +1,11 @@
 AdGuard Home blocklist generator
 ===
 
-AdGuard Home blocklist generator is a tool to generate a formatted blocklist for [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) from a URL. It accepts a variety of input formats, including:
+AdGuard Home blocklist generator is a tool to generate a formatted blocklist for [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) from a URL. It accepts a variety of blocklist formats, including:
 
 - Plain line-separated list of domain names
 - A hosts-formatted list (eg `0.0.0.0 example.com`)
-- AdGuard-formatted lists
+- AdGuard-formatted list
 
 It allows you to append [AdGuard rule modifiers](https://github.com/AdguardTeam/AdGuardHome/wiki/Hosts-Blocklists#modifiers) to the generated blocklist to allow for more specific filtering, such as ctags, clients etc.
 
