@@ -146,13 +146,13 @@ func GithubUpdate(repo, appName, currentVersion string) (string, error) {
 		return "", err
 	}
 
-	newExec := filepath.Join(tmpDir, "ssbak")
+	newExec := filepath.Join(tmpDir, "adguard-home-bg")
 
 	if runtime.GOOS == "windows" {
 		if _, err := Unzip(outFile, tmpDir); err != nil {
 			return "", err
 		}
-		newExec = filepath.Join(tmpDir, "ssbak.exe")
+		newExec = filepath.Join(tmpDir, "adguard-home-bg.exe")
 	} else {
 		if err := TarGZExtract(outFile, tmpDir); err != nil {
 			return "", err
@@ -287,7 +287,7 @@ func getTempDir() string {
 		if _, err := rand.Read(randBytes); err != nil {
 			panic(err)
 		}
-		tempDir = filepath.Join(os.TempDir(), "ssbak-"+hex.EncodeToString(randBytes))
+		tempDir = filepath.Join(os.TempDir(), "updater-"+hex.EncodeToString(randBytes))
 	}
 	if err := mkDirIfNotExists(tempDir); err != nil {
 		// need a better way to exit
