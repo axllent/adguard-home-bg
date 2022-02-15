@@ -1,0 +1,238 @@
+<!doctype html>
+
+<head>
+	<meta charset=utf-8>
+	<meta name=viewport content="width=device-width,initial-scale=1">
+	<title>AdGuard Home blocklist generator</title>
+	<meta name="referrer" content="no-referrer">
+	<link rel="icon" type="image/png" href="assets/favicon.png" sizes="48x48">
+	<link href="assets/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/BsMultiSelect.min.css" rel="stylesheet">
+	<style>
+		body {
+			overflow-y: scroll;
+		}
+
+		.container-fluid {
+			max-width: 1200px;
+		}
+
+		.form-label {
+			font-weight: bolder;
+		}
+
+		.form-label code {
+			font-weight: normal;
+		}
+
+		[v-cloak] {
+			display: none !important;
+		}
+
+		.dropdown-menu {
+			max-height: 300px;
+			overflow: scroll;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid mt-2">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>AdGuard Home blocklist generator</h1>
+				<p>
+					This is a blocklist generator for AdGuard Home.
+					For more information, see the <a href="https://github.com/axllent/adguard-home-bg"
+						target="_blank">project page</a>.
+				</p>
+			</div>
+		</div>
+		<div id="App" v-cloak>
+			<div class="mb-3 mb-md-5">
+				<label for="url" class="form-label">Blocklist URL</label>
+				<input type="url" class="form-control" id="url" v-model="url"
+					placeholder="https://example.com/blocklist.txt">
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<h6 class="m-0">
+						Rule modifiers
+						<span style="font-weight:normal">(<a
+								href="https://github.com/AdguardTeam/AdGuardHome/wiki/Hosts-Blocklists"
+								target="_blank">wiki</a>)<span>
+					</h6>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-6 mb-4">
+							<label class="form-label">Tags (ctag)</label>
+							<select v-model="ctag" class="form-select" multiple>
+								<option disabled>By device type</option>
+								<option value="device_audio">device_audio</option>
+								<option value="device_camera">device_camera</option>
+								<option value="device_gameconsole"> device_gameconsole</option>
+								<option value="device_laptop"> device_laptop</option>
+								<option value="device_nas">device_nas</option>
+								<option value="device_pc">device_pc</option>
+								<option value="device_phone">device_phone</option>
+								<option value="device_printer">device_printer</option>
+								<option value="device_securityalarm">device_securityalarm</option>
+								<option value="device_tablet">device_tablet</option>
+								<option value="device_tv">device_tv</option>
+								<option value="device_other">device_other</option>
+								<option disabled>By operating system</option>
+								<option value="os_android">os_android</option>
+								<option value="os_ios">os_ios</option>
+								<option value="os_linux">os_linux</option>
+								<option value="os_macos">os_macos</option>
+								<option value="os_windows">os_windows</option>
+								<option value="os_other">os_other</option>
+								<option disabled>By user group</option>
+								<option value="user_admin">user_admin</option>
+								<option value="user_regular">user_regular</option>
+								<option value="user_child">user_child</option>
+							</select>
+						</div>
+						<div class="col-md-6 mb-4">
+							<label for="client" class="form-label">client <code>value1|value2|...</code></label>
+							<input type="text" v-model.trim="client" id="client" class="form-control">
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-md-6 mb-4">
+							<label for="Denyallow" class="form-label">denyallow <code>value1|value2|...</code></label>
+							<input type="text" v-model.trim="denyallow" id="Denyallow" class="form-control">
+						</div>
+						<div class="col-md-6 mb-4">
+							<label for="DNSType" class="form-label">dnstype <code>value1|value2|...</code></label>
+							<input type="text" v-model.trim="dnstype" id="DNSType" class="form-control">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 mb-4">
+							<label for="dnsrewrite" class="form-label">dnsrewrite <code>value1;value2;...</code></label>
+							<input type="text" v-model.trim="dnsrewrite" id="dnsrewrite" class="form-control">
+						</div>
+						<div class="col-md-6 mb-4">
+							<label for="dnsrewrite" class="form-label">Options</label>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" v-model="important" id="important">
+								<label class="form-check-label" for="important">
+									set <code>important</code> (increase priority over other matching rules)
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" v-model="badfilter" id="badfilter">
+								<label class="form-check-label" for="badfilter">
+									set <code>badfilter</code> (reverse all rules)
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-success" v-if="isValid">
+				<div class="container-fluid text-center d-block small">
+					<a :href="formattedUrl" target="_blank" class="text-white">
+						{{ formattedUrl }}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="assets/vue.global.prod.js"></script>
+	<script src="assets/popper.min.js"></script>
+	<script src="assets/BsMultiSelect.min.js"></script>
+	<script>
+		Vue.createApp({
+			data() {
+				return {
+					showoptions: false,
+					url: '',
+					ctag: [],
+					client: '',
+					denyallow: '',
+					dnstype: '',
+					dnsrewrite: '',
+					important: false,
+					badfilter: false,
+					exclude: false,
+				}
+			},
+
+			mounted: function () {
+				document.querySelectorAll('select[multiple]').forEach(s => {
+					dashboardcode.BsMultiSelect(s);
+				});
+			},
+
+			computed: {
+				isValid: function () {
+					return this.validateURL(this.url);
+				},
+
+				base: function () {
+					return window.location.href.split("?")[0];
+				},
+
+				formattedUrl: function () {
+					if (!this.isValid) {
+						return false;
+					}
+
+					let url = this.base + '?url=' + this.url;
+
+					if (this.ctag.length > 0) {
+						url += '&ctag=' + this.ctag.join('|');
+					}
+
+					if (this.client != '') {
+						url += '&client=' + this.client;
+					}
+
+					if (this.denyallow != '') {
+						url += '&denyallow=' + this.denyallow;
+					}
+
+					if (this.dnstype != '') {
+						url += '&dnstype=' + this.dnstype;
+					}
+
+					if (this.dnsrewrite != '') {
+						url += '&dnsrewrite=' + this.dnsrewrite;
+					}
+
+					if (this.important != '') {
+						url += '&important';
+					}
+
+					if (this.badfilter != '') {
+						url += '&badfilter';
+					}
+
+					return url;
+				},
+			},
+
+			methods: {
+				validateURL: function (str) {
+					var regexp = /^http(s)?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+					if (regexp.test(str)) {
+						return true;
+					} else {
+						return false;
+					}
+				},
+			}
+		}).mount('#App');
+	</script>
+</body>
+
+</html>
