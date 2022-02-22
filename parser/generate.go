@@ -76,9 +76,15 @@ func (c conf) parseRaw(raw string) ([]string, error) {
 		}
 
 		words := strings.Split(l, " ")
+		// ignore blank words
 		for _, w := range words {
 			if w == "" {
 				continue
+			}
+
+			// ignore anything after a comment
+			if strings.HasPrefix(w, "#") || strings.HasPrefix(w, "!") {
+				break
 			}
 
 			matches := domainRegex.FindAllStringSubmatch(w, -1)
@@ -90,6 +96,8 @@ func (c conf) parseRaw(raw string) ([]string, error) {
 				} else {
 					domains = append(domains, matches[0][1]+matches[0][2]+modifiers)
 				}
+
+				break
 			}
 		}
 
@@ -125,47 +133,6 @@ func (c conf) URLToBlocklist(uri string) (string, error) {
 	sec := "! --------------------------------------------------\n"
 
 	return fmt.Sprintf("%s! Source:  %s\n! Domains: %d\n! Updated: %s\n%s", sec, uri, len(domains), date, sec) + strings.Join(domains, "\n"), nil
-
-	// domains := []string{}
-
-	// domainRegex := regexp.MustCompile(`^([@|]+)?(([a-z0-9\-\.]+)\.([a-z]{2,4}))`)
-
-	// lines := strings.Split(raw, "\n")
-	// for _, l := range lines {
-	// 	l = strings.TrimSpace(strings.ToLower(l))
-	// 	if l == "" || strings.HasPrefix(l, "#") || strings.HasPrefix(l, "!") {
-	// 		continue
-	// 	}
-
-	// 	words := strings.Split(l, " ")
-	// 	for _, w := range words {
-	// 		if w == "" {
-	// 			continue
-	// 		}
-
-	// 		matches := domainRegex.FindAllStringSubmatch(w, -1)
-
-	// 		cnt := len(matches)
-	// 		if cnt > 0 {
-	// 			if matches[0][1] == "" {
-	// 				domains = append(domains, "|"+matches[0][2]+modifiers)
-	// 			} else {
-	// 				domains = append(domains, matches[0][1]+matches[0][2]+modifiers)
-	// 			}
-	// 		}
-	// 	}
-
-	// }
-
-	// sort.Strings(domains)
-
-	// domains = unique(domains)
-
-	// currentTime := time.Now()
-	// date := currentTime.Format(time.UnixDate)
-	// sec := "! --------------------------------------------------\n"
-
-	// return fmt.Sprintf("%s! Source:  %s\n! Domains: %d\n! Updated: %s\n%s", sec, uri, len(domains), date, sec) + strings.Join(domains, "\n"), nil
 }
 
 func unique(strSlice []string) []string {
