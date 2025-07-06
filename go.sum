@@ -1,7 +1,7 @@
 github.com/apsdehal/go-logger v0.0.0-20190515212710-b0d6ccfee0e6 h1:qISSdUEX4sjDHfdD/vf65fhuCh3pIhiILDB7ktjJrqU=
 github.com/apsdehal/go-logger v0.0.0-20190515212710-b0d6ccfee0e6/go.mod h1:U3/8D6R9+bVpX0ORZjV+3mU9pQ86m7h1lESgJbXNvXA=
-github.com/axllent/semver v1.0.0 h1:FDekA0alnMed5bWVWjUwBS+6QouZZkmPXsGVmOfjWOg=
-github.com/axllent/semver v1.0.0/go.mod h1:ySHHYLyFX3vKAALmaO8TOOJkzGRsUNmzFiIWwPm8li8=
+github.com/axllent/ghru/v2 v2.0.2 h1:xalJupjJAU8Kcs39AwpG53qbcbi3+WKM98BEoQWf/zU=
+github.com/axllent/ghru/v2 v2.0.2/go.mod h1:seMMjx8/0r5ZAL7c0vwTPIRoyN0AoTUqAylZEWZWGK4=
 github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6NIQQ7OS05n1F4g=
 github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
 github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=

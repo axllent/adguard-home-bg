@@ -6,7 +6,7 @@ toolchain go1.23.1
 
 require (
 	github.com/apsdehal/go-logger v0.0.0-20190515212710-b0d6ccfee0e6
-	github.com/axllent/semver v1.0.0
+	github.com/axllent/ghru/v2 v2.0.2
 	github.com/gorilla/mux v1.8.1
 	github.com/spf13/cobra v1.9.1
 )
