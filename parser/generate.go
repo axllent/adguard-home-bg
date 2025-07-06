@@ -1,3 +1,4 @@
+// Package parser handled the generation of block lists
 package parser
 
 import (

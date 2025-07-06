@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/apsdehal/go-logger"
@@ -30,20 +29,16 @@ func initLogger() *logger.Logger {
 
 	logLevel := logger.ErrorLevel
 
-	if Level == "v" {
-		fmt.Println("v")
+	switch Level {
+	case "v":
 		logLevel = logger.WarningLevel
-	} else if Level == "vv" {
+	case "vv":
 		logLevel = logger.NoticeLevel
-	} else if Level == "vvv" {
+	case "vvv":
 		logLevel = logger.InfoLevel
-	} else if Level == "vvvv" {
+	case "vvvv":
 		logLevel = logger.DebugLevel
 	}
-
-	// if LogToFile != "" {
-	//
-	// }
 
 	l, _ = logger.New("log", 1, os.Stdout, logLevel)
 	l.SetFormat("%{time} [%{level}] %{message}")

@@ -1,3 +1,4 @@
+// Package server is the server package
 package server
 
 import (

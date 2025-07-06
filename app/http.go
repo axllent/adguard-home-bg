@@ -2,20 +2,20 @@ package app
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
 )
 
-// FourOFour returns a standard 404 meesage
+// FourOFour returns a standard 404 message
 func FourOFour(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusNotFound)
 	w.Header().Set("Content-Type", "text/plain")
 	fmt.Fprint(w, "404 page not found")
 }
 
-// HTTPError returns a standard 404 meesage
+// HTTPError returns a standard 404 message
 func HTTPError(w http.ResponseWriter, msg string) {
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Header().Set("Content-Type", "text/plain")
@@ -55,7 +55,7 @@ func DownloadToString(url string) (string, error) {
 		return "", err
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}

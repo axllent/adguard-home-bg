@@ -1,7 +1,4 @@
-/*
-Copyright © 2021-Now() Ralph Slooten
-This file is part of a CLI application.
-*/
+// Package main is the entrypoint for the application
 package main
 
 import "github.com/axllent/adguard-home-bg/cmd"
